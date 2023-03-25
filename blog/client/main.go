@@ -2,6 +2,7 @@ package main
 
 import (
 	"log"
+	"time"
 
 	"google.golang.org/grpc"
 	"google.golang.org/grpc/credentials/insecure"
@@ -21,5 +22,9 @@ func main() {
 
 	c := pb.NewBlogServiceClient(conn)
 
-	CreateBlog(c)
+	id := CreateBlog(c)
+
+	ReadBlog(c, id) // Valid
+	time.Sleep(2 * time.Second)
+	ReadBlog(c, "invalid id")
 }
